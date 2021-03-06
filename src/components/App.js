@@ -18,6 +18,7 @@ class App extends React.Component {
     };
   }
   setPage(page) {
+    console.log(this.setState);
     this.setState({ page });
   }
   renderMain(page) {
@@ -43,7 +44,7 @@ class App extends React.Component {
         <main className={css.content}>
           {this.renderMain(this.state.page)}
         </main>
-        <Navbar />
+        <Navbar onNavChange={this.setPage.bind(this)}/>
       </div>
     );
   }
