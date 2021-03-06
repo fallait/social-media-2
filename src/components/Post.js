@@ -44,14 +44,14 @@ function Post(props) {
         <div className={css.comments}>
           <div>
             <span>
-              <button>{props.post.userId}</button>
+              {props.post.userId}
             </span>
             <span>{props.post.desc}</span>
           </div>
           {props.comments.map((comment, i) => (
             <div key={i}>
               <span>
-                <button>{comment.userId}</button>
+                {comment.userId}
               </span>
               <span>{comment.text}</span>
             </div>

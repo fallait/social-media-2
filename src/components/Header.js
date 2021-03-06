@@ -14,7 +14,7 @@ function Header() {
         </div>
         <div>
           <button>
-          <img src="https://cdn.glitch.com/f70d577d-f905-45ee-bb92-042bfa767970%2Fcomment.svg?v=1614382900046" alt="message"/>
+          <img src="https://cdn.glitch.com/f70d577d-f905-45ee-bb92-042bfa767970%2Fmessage.svg?v=1614382900322" alt="message"/>
           </button>
         </div>
         

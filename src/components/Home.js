@@ -28,12 +28,8 @@ function Home() {
       }
     ]
   };
-  return <Post 
-    user={post.user} 
-    likes = {post.likes} 
-    post = {post.post} 
-    comments={post.comments}  
-  />
+  return <h2>Home</h2>
+
 }
 
 export default Home;
