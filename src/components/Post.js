@@ -1,7 +1,7 @@
 import React from "react";
-import css from 'Post.module.css';
-import timespan from 'utils/timespan.js';
-import publicUrl from 'utils/publicUrl.js';
+import css from "./Post.module.css";
+import timespan from "utils/timespan.js";
+import publicUrl from "utils/publicUrl.js";
 
 function Post(props) {
   return (
@@ -22,20 +22,21 @@ function Post(props) {
         <button>
           {props.likes.self ? (
             <img
-              src={publicUrl("/assets/unlike.svg")}
+              src="https://cdn.glitch.com/f70d577d-f905-45ee-bb92-042bfa767970%2Funlike.svg?v=1614382900439"
               alt="Unlike Action"
-              onClick={handleUnlike}
             />
           ) : (
             <img
-              src={publicUrl("/assets/like.svg")}
+              src="https://cdn.glitch.com/f70d577d-f905-45ee-bb92-042bfa767970%2Flike.svg?v=1614382900207"
               alt="Like Action"
-              onClick={handleLike}
             />
           )}
         </button>
-        <button onClick={handleToggleComment}>
-          <img src={publicUrl("/assets/comment.svg")} alt="Comment Action" />
+        <button>
+          <img
+            src="https://cdn.glitch.com/f70d577d-f905-45ee-bb92-042bfa767970%2Fcomment.svg?v=1614382900046"
+            alt="Comment Action"
+          />
         </button>
       </section>
       <section className={css.activity}>
@@ -43,16 +44,14 @@ function Post(props) {
         <div className={css.comments}>
           <div>
             <span>
-              <Link to={`/profile/${props.post.userId}`}>
-                {props.post.userId}
-              </Link>
+              <button>{props.post.userId}</button>
             </span>
             <span>{props.post.desc}</span>
           </div>
           {props.comments.map((comment, i) => (
             <div key={i}>
               <span>
-                <Link to={`/profile/${comment.userId}`}>{comment.userId}</Link>
+                <button>{comment.userId}</button>
               </span>
               <span>{comment.text}</span>
             </div>
@@ -61,17 +60,6 @@ function Post(props) {
         <time className={css.time}>
           {timespan(props.post.datetime).toUpperCase()} AGO
         </time>
-        {toggleComment && (
-          <form className={css.addComment} onSubmit={handleSubmitComment}>
-            <input
-              type="text"
-              placeholder="Add a comment…"
-              value={comment}
-              onChange={handleCommentChange}
-            />
-            <button type="submit">Post</button>
-          </form>
-        )}
       </section>
     </article>
   );
