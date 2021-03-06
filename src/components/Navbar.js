@@ -4,6 +4,7 @@ import css from './Navbar.module.css';
 
 function Navbar(props) {
     function handleNavChange(page){
+      console.log('page', page);
         if (props.onNavChange){
             props.onNavChange(page);
         }
