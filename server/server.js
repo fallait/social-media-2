@@ -14,6 +14,13 @@ function checkHttps(request, response, next) {
 }
 
 app.all("*", checkHttps);
+// my api
+app.get("/api/name", (request, response) => {
+  // console.log("❇️ Received GET request to /api/ping");
+  response.json({
+    name: "week1-bc-social-media-lab"
+  });
+});
 
 // A test route to make sure the server is up.
 app.get("/api/ping", (request, response) => {
