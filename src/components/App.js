@@ -16,6 +16,7 @@ class App extends React.Component {
     this.state = {
       page: "home"
     };
+    
   }
   setPage(page) {
     console.log(this.setState);
