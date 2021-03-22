@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 // import logo from './logo.svg';
 import "./App.css";
 import css from "./App.module.css";
@@ -10,82 +10,109 @@ import Activity from "./Activity.js";
 import Profile from "./Profile.js";
 import Navbar from "./Navbar.js";
 import initialStore from 'utils/initialStore';
+import uniqueId from 'utils/uniqueId'
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      page: 'home',
-      store: initialStore // initialize the store as part of the state
-    };
-    this.addLike = this.addLike.bind(this);
-    this.removeLike = this.removeLike.bind(this);
-  }
-  setPage(page) {
-    console.log(this.setState);
-    this.setState({ page });
-  }
-  renderMain(page) {
+
+function App() {
+
+  const [page, setPage] = useState('home');
+  const [store, setStore] = useState(initialStore);
+
+  function renderMain(page) {
     switch (page) {
       case "home":
         return <Home
-          store={this.state.store}
-          onLike={this.addLike}
-          onUnlike={this.removeLike}
+          store={store}
+          onLike={addLike}
+          onUnlike={removeLike}
+          onComment={addComment}
         />;
       case "explore":
         return <Explore />;
       case "activity":
         return <Activity />;
       case "newpost":
-        return <NewPost />;
+        return <NewPost
+          store={store}
+          addPost={addPost}
+          cancelPost={cancelPost} />;
       case "profile":
         return <Profile
-          store={this.state.store}
+          store={store}
         />;
       default:
-        return <Home store={this.state.store}
-          onLike={this.addLike}
-          onUnlike={this.removeLike} />;
+        return <Home store={store}
+          onLike={addLike}
+          onUnlike={removeLike} />;
     }
   }
 
-  addLike(postId) {
+  function addLike(postId) {
     const like = {
-      userId: this.state.store.currentUserId,
+      userId: store.currentUserId,
       postId, // make sure you understand this shorthand syntax
       datetime: new Date().toISOString()
     };
 
-    this.setState(state => ({
-      store: {
-        ...state.store,// spread props. make sure you understand this
-        likes: state.store.likes.concat(like)
-      }
-    }));
+    setStore({
+      ...store,// spread props. make sure you understand this
+      likes: store.likes.concat(like)
+    });
   }
 
-  removeLike(postId) {
-    this.setState(state => ({
-      store: {
-        ...state.store,// spread props. make sure you understand this
-        likes: this.state.store.likes.filter(like => !(like.userId === this.state.store.currentUserId && like.postId === postId))
-
-      }
-    }));
+  function removeLike(postId) {
+    setStore({
+      ...store,// spread props. make sure you understand this
+      likes: store.likes.filter(like => !(like.userId === store.currentUserId && like.postId === postId))
+    });
   }
 
-  render() {
-    return (
-      <div className={css.container}>
-        <Header />
-        <main className={css.content}>
-          {this.renderMain(this.state.page)}
-        </main>
-        <Navbar onNavChange={this.setPage.bind(this)} />
-      </div>
-    );
+  function addComment(postId, text) {
+    const comment = {
+      userId: store.currentUserId,
+      postId,
+      text,
+      datetime: new Date().toISOString()
+    };
+    setStore({
+      ...store,
+      comments: store.comments.concat(comment)
+    });
   }
+
+  function addPost(photo, desc) {
+    // TODO:
+    // 1. Create a new post object (use uniqueId('post') to create an id)
+    const newPost = {
+      id: uniqueId('post'),
+      userId: store.currentUserId,
+      photo,
+      desc,
+      datetime: new Date().toISOString()
+    }
+    console.log(photo);
+    // 2. Update the store 
+    setStore({
+      ...store,
+      posts: store.posts.concat(newPost)
+    })
+    // 3. Call setPage to come back to the home page
+    setPage('home');
+  }
+  function cancelPost() {
+    // TODO:
+    // 1. Call setPage to come back to the home page (we will use Router to improve this)
+    setPage("home");
+  }
+  return (
+    <div className={css.container}>
+      <Header />
+      <main className={css.content}>
+        {renderMain(page)}
+      </main>
+      <Navbar onNavChange={setPage} />
+    </div>
+  );
 }
 
 export default App;

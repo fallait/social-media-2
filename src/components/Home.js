@@ -24,6 +24,7 @@ function Home(props) {
       {store.posts.sort((a, b) => new Date(b.datetime) - new Date(a.datetime))
         .map(post =>
           <Post
+            store = {store}
             key={post.id}
             user={findUser(post, store)}
             post={post}
@@ -31,6 +32,7 @@ function Home(props) {
             likes={findLikes(post, store)}
             onLike={props.onLike} 
             onUnlike={props.onUnlike}
+            onComment={props.onComment}
           />)}
     </div>
   );
