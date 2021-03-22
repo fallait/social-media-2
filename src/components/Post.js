@@ -1,17 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import css from "./Post.module.css";
 import timespan from "utils/timespan.js";
 import publicUrl from "utils/publicUrl.js";
 
 
+
 function Post(props) {
+
+  const [comment, setComment] = useState('');
+  const [toggleComment, setToggleComment] = useState(false); // hidden initially
+
   function handleLike() {
     props.onLike(props.post.id);
   }
-  
+
+
+  function handleSubmitComment(event) {
+    props.onComment(props.post.id, comment); // this calls addComment from App.js
+    setComment(''); //reset
+    setToggleComment(false); //close comment box
+    event.preventDefault(); // prevent page refresh
+  }
+
   function handleUnlike() {
     props.onUnlike(props.post.id);
   }
+
   return (
     <article className={css.post}>
       <header className={css.header}>
@@ -42,11 +56,8 @@ function Post(props) {
             />
           )}
         </button>
-        <button>
-          <img
-            src="https://cdn.glitch.com/f70d577d-f905-45ee-bb92-042bfa767970%2Fcomment.svg?v=1614382900046"
-            alt="Comment Action"
-          />
+        <button onClick={e => setToggleComment(!toggleComment)}>
+          <img src={publicUrl('/assets/comment.svg')} alt='Comment Action' />
         </button>
       </section>
       <section className={css.activity}>
@@ -71,7 +82,14 @@ function Post(props) {
           {timespan(props.post.datetime).toUpperCase()} AGO
         </time>
       </section>
+      {toggleComment &&
+        <form className={css.addComment} onSubmit={handleSubmitComment}>
+          <input type="text" placeholder="Add a comment…" value={comment} onChange={e => setComment(e.target.value)} />
+          <button type="submit">Post</button>
+        </form>
+      }
     </article>
+
   );
 }
 
