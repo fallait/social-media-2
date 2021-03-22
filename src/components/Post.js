@@ -3,7 +3,15 @@ import css from "./Post.module.css";
 import timespan from "utils/timespan.js";
 import publicUrl from "utils/publicUrl.js";
 
+
 function Post(props) {
+  function handleLike() {
+    props.onLike(props.post.id);
+  }
+  
+  function handleUnlike() {
+    props.onUnlike(props.post.id);
+  }
   return (
     <article className={css.post}>
       <header className={css.header}>
@@ -22,11 +30,13 @@ function Post(props) {
         <button>
           {props.likes.self ? (
             <img
+              onClick={handleUnlike}
               src="https://cdn.glitch.com/f70d577d-f905-45ee-bb92-042bfa767970%2Funlike.svg?v=1614382900439"
               alt="Unlike Action"
             />
           ) : (
             <img
+              onClick={handleLike}
               src="https://cdn.glitch.com/f70d577d-f905-45ee-bb92-042bfa767970%2Flike.svg?v=1614382900207"
               alt="Like Action"
             />
