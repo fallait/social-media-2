@@ -31,7 +31,7 @@ function Profile(props) {
       </section>
       <section className={css.posts}>
         {posts.map(post =>
-          <img src={publicUrl(post.photo)}></img>
+          <img src={publicUrl(post.photo)} alt = "Profile Post"></img>
 
         )}
       </section>
