@@ -74,7 +74,7 @@ function NewPost(props) {
       <div className={css.desc} >
         <textarea
           placeholder="Describe your post!"
-          rows="3"
+          rows="1"
           value={desc}
           onChange={handleDescChange}
         />
