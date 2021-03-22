@@ -53,7 +53,7 @@ function NewPost(props) {
   }
   function handleCancel() {
     // TODO: Notify the parent about the cancellation
-    props.onCancel();
+    props.cancelPost();
   }
   return (
     <div>
