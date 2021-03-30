@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import css from "./Post.module.css";
 import timespan from "utils/timespan.js";
 import publicUrl from "utils/publicUrl.js";
+import { Link } from "react-router-dom";
+
 
 
 
@@ -29,10 +31,10 @@ function Post(props) {
   return (
     <article className={css.post}>
       <header className={css.header}>
-        <button className={css.user} to={`/profile/${props.user.id}`}>
+        <Link className={css.user} to={`/profile/${props.user.id}`}>
           <img src={publicUrl(props.user.photo)} alt="User Profile" />
           <span>{props.user.id} </span>
-        </button>
+        </Link>
       </header>
       <section className={css.content}>
         <div className={css.imgContainer}>
@@ -65,14 +67,18 @@ function Post(props) {
         <div className={css.comments}>
           <div>
             <span>
-              {props.post.userId}
+              <Link className={css.user} to={`/profile/${props.post.userId}`}>
+                {props.post.userId}
+              </Link>
             </span>
             <span>{props.post.desc}</span>
           </div>
           {props.comments.map((comment, i) => (
             <div key={i}>
               <span>
+              <Link className={css.user} to={`/profile/${comment.userId}`}>
                 {comment.userId}
+                </Link>
               </span>
               <span>{comment.text}</span>
             </div>

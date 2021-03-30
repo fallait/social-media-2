@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import css from './NewPost.module.css';
 import FileLoader from './FileLoader.js';
+import {useHistory} from "react-router-dom";
+
 
 function NewPost(props) {
   const [dragging, setDragging] = useState(false); // to show a dragging effect
   const [desc, setDesc] = useState('');
   const [photo, setPhoto] = useState(null);
   const [error, setError] = useState(''); // to show an error message
+  const history = useHistory();
 
+  
   function handleFileDragEnter(e) {
     setDragging(true);
   }
@@ -49,11 +53,12 @@ function NewPost(props) {
       return;
     }
     props.addPost(photo, desc);
+    history.push('/');
     setError("");
   }
   function handleCancel() {
     // TODO: Notify the parent about the cancellation
-    props.cancelPost();
+    history.goBack()
   }
   return (
     <div>
